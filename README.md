@@ -5,6 +5,6 @@ AfterEffects用プラグインを作っているときに必要なもの(オー�
 C++17とC++20に対応しています。  
 
 # 使い方  
-AeUtils.hppをincludeするだけ。
+AE_Utils.hppをincludeするだけ。
 
 copyright (C) 2023 HanaYuki
