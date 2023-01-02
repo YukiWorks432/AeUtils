@@ -10,7 +10,7 @@
 
 template <typename T>
 inline PF_Pixel32 operator+(const PF_Pixel32 &src, const T x) noexcept {
-    static_assert(std::is_arithmetic_v(T));
+    static_assert(std::is_arithmetic_v<T>);
     return PF_Pixel32{static_cast<A_FpShort>(src.alpha + x),
                       static_cast<A_FpShort>(src.red + x),
                       static_cast<A_FpShort>(src.green + x),
@@ -18,7 +18,7 @@ inline PF_Pixel32 operator+(const PF_Pixel32 &src, const T x) noexcept {
 }
 template <typename T>
 inline PF_Pixel32 operator-(const PF_Pixel32 &src, const T x) noexcept {
-    static_assert(std::is_arithmetic_v(T));
+    static_assert(std::is_arithmetic_v<T>);
     return PF_Pixel32{static_cast<A_FpShort>(src.alpha - x),
                       static_cast<A_FpShort>(src.red - x),
                       static_cast<A_FpShort>(src.green - x),
@@ -26,7 +26,7 @@ inline PF_Pixel32 operator-(const PF_Pixel32 &src, const T x) noexcept {
 }
 template <typename T>
 inline PF_Pixel32 operator*(const PF_Pixel32 &src, const T x) noexcept {
-    static_assert(std::is_arithmetic_v(T));
+    static_assert(std::is_arithmetic_v<T>);
     return PF_Pixel32{static_cast<A_FpShort>(src.alpha * x),
                       static_cast<A_FpShort>(src.red * x),
                       static_cast<A_FpShort>(src.green * x),
@@ -34,7 +34,7 @@ inline PF_Pixel32 operator*(const PF_Pixel32 &src, const T x) noexcept {
 }
 template <typename T>
 inline PF_Pixel32 operator/(const PF_Pixel32 &src, const T x) noexcept {
-    static_assert(std::is_arithmetic_v(T));
+    static_assert(std::is_arithmetic_v<T>);
     return PF_Pixel32{static_cast<A_FpShort>(src.alpha / x),
                       static_cast<A_FpShort>(src.red / x),
                       static_cast<A_FpShort>(src.green / x),
@@ -42,7 +42,7 @@ inline PF_Pixel32 operator/(const PF_Pixel32 &src, const T x) noexcept {
 }
 template <typename T>
 inline PF_Pixel32 operator+(const T x, const PF_Pixel32 &src) noexcept {
-    static_assert(std::is_arithmetic_v(T));
+    static_assert(std::is_arithmetic_v<T>);
     return PF_Pixel32{static_cast<A_FpShort>(x + src.alpha),
                       static_cast<A_FpShort>(x + src.red),
                       static_cast<A_FpShort>(x + src.green),
@@ -50,7 +50,7 @@ inline PF_Pixel32 operator+(const T x, const PF_Pixel32 &src) noexcept {
 }
 template <typename T>
 inline PF_Pixel32 operator-(const T x, const PF_Pixel32 &src) noexcept {
-    static_assert(std::is_arithmetic_v(T));
+    static_assert(std::is_arithmetic_v<T>);
     return PF_Pixel32{static_cast<A_FpShort>(x - src.alpha),
                       static_cast<A_FpShort>(x - src.red),
                       static_cast<A_FpShort>(x - src.green),
@@ -58,7 +58,7 @@ inline PF_Pixel32 operator-(const T x, const PF_Pixel32 &src) noexcept {
 }
 template <typename T>
 inline PF_Pixel32 operator*(const T x, const PF_Pixel32 &src) noexcept {
-    static_assert(std::is_arithmetic_v(T));
+    static_assert(std::is_arithmetic_v<T>);
     return PF_Pixel32{static_cast<A_FpShort>(x * src.alpha),
                       static_cast<A_FpShort>(x * src.red),
                       static_cast<A_FpShort>(x * src.green),
@@ -66,7 +66,7 @@ inline PF_Pixel32 operator*(const T x, const PF_Pixel32 &src) noexcept {
 }
 template <typename T>
 inline PF_Pixel32 operator/(const T x, const PF_Pixel32 &src) noexcept {
-    static_assert(std::is_arithmetic_v(T));
+    static_assert(std::is_arithmetic_v<T>);
     return PF_Pixel32{static_cast<A_FpShort>(x / src.alpha),
                       static_cast<A_FpShort>(x / src.red),
                       static_cast<A_FpShort>(x / src.green),
