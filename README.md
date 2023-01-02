@@ -4,4 +4,4 @@ AfterEffects用プラグインを作っているときに必要なもの(オー�
 ヘッダオンリー、依存ライブラリ無しがモットーです。  
 C++17とC++20に対応しています。  
 
-copyright (C) 2022 HanaYuki
+copyright (C) 2023 HanaYuki
