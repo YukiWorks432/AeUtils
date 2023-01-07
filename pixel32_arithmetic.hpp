@@ -285,29 +285,29 @@ inline PF_Pixel32 operator/(const PF_Pixel32 &src,
 inline PF_Pixel32 &operator+=(PF_Pixel32 &src, const PF_Pixel32 &x) noexcept {
     src.alpha += x.alpha;
     src.red += x.red;
-    src.green += src.green;
-    src.blue += src.blue;
+    src.green += x.green;
+    src.blue += x.blue;
     return src;
 }
 inline PF_Pixel32 &operator-=(PF_Pixel32 &src, const PF_Pixel32 &x) noexcept {
     src.alpha -= x.alpha;
     src.red -= x.red;
-    src.green -= src.green;
-    src.blue -= src.blue;
+    src.green -= x.green;
+    src.blue -= x.blue;
     return src;
 }
 inline PF_Pixel32 &operator*=(PF_Pixel32 &src, const PF_Pixel32 &x) noexcept {
     src.alpha *= x.alpha;
     src.red *= x.red;
-    src.green *= src.green;
-    src.blue *= src.blue;
+    src.green *= x.green;
+    src.blue *= x.blue;
     return src;
 }
 inline PF_Pixel32 &operator/=(PF_Pixel32 &src, const PF_Pixel32 &x) noexcept {
     src.alpha /= x.alpha;
     src.red /= x.red;
-    src.green /= src.green;
-    src.blue /= src.blue;
+    src.green /= x.green;
+    src.blue /= x.blue;
     return src;
 }
 

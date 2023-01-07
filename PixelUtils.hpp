@@ -33,7 +33,6 @@ bool operator!=(const PF_Pixel32 &left, const PF_Pixel32 &right) noexcept {
              (left.green == right.green) && (left.blue == right.blue));
 }
 
-#include <format>
 #include <iostream>
 
 template <class _Elem, class _Traits, class _Alloc>
