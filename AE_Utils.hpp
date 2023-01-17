@@ -7,5 +7,6 @@
 #include "HSV.hpp"
 #include "PixelUtils.hpp"
 #include "Rect.hpp"
+#include "pixel_math.hpp"
 
 #endif
