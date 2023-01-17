@@ -2,8 +2,6 @@
 #ifndef AE_UTILS_RECT_HPP
 #define AE_UTILS_RECT_HPP
 
-#include <cmath>
-
 struct RectType {
     int width = 0, height = 0, pitch = 0;
 };
@@ -26,9 +24,9 @@ class RectData {
     RectData &operator=(RectData &&) = default;
 
     RectType Bigger() const noexcept {
-        return RectType{std::max(in.width, out.width),
-                        std::max(in.height, out.height),
-                        std::max(in.pitch, out.pitch)};
+        return RectType{in.width > out.width ? in.width : out.width,
+                        in.height > out.height ? in.height : out.height,
+                        in.pitch > out.pitch ? in.pitch : out.pitch};
     }
 };
 
