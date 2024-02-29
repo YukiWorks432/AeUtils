@@ -8,27 +8,31 @@
 #include "pixel32_arithmetic.hpp"
 #include "pixel8_arithmetic.hpp"
 
-bool operator==(const PF_Pixel8 &left, const PF_Pixel8 &right) noexcept {
+inline bool operator==(const PF_Pixel8 &left, const PF_Pixel8 &right) noexcept {
     return (left.alpha == right.alpha) && (left.red == right.red) &&
            (left.green == right.green) && (left.blue == right.blue);
 }
-bool operator==(const PF_Pixel16 &left, const PF_Pixel16 &right) noexcept {
+inline bool operator==(const PF_Pixel16 &left,
+                       const PF_Pixel16 &right) noexcept {
     return (left.alpha == right.alpha) && (left.red == right.red) &&
            (left.green == right.green) && (left.blue == right.blue);
 }
-bool operator==(const PF_Pixel32 &left, const PF_Pixel32 &right) noexcept {
+inline bool operator==(const PF_Pixel32 &left,
+                       const PF_Pixel32 &right) noexcept {
     return (left.alpha == right.alpha) && (left.red == right.red) &&
            (left.green == right.green) && (left.blue == right.blue);
 }
-bool operator!=(const PF_Pixel8 &left, const PF_Pixel8 &right) noexcept {
+inline bool operator!=(const PF_Pixel8 &left, const PF_Pixel8 &right) noexcept {
     return !((left.alpha == right.alpha) && (left.red == right.red) &&
              (left.green == right.green) && (left.blue == right.blue));
 }
-bool operator!=(const PF_Pixel16 &left, const PF_Pixel16 &right) noexcept {
+inline bool operator!=(const PF_Pixel16 &left,
+                       const PF_Pixel16 &right) noexcept {
     return !((left.alpha == right.alpha) && (left.red == right.red) &&
              (left.green == right.green) && (left.blue == right.blue));
 }
-bool operator!=(const PF_Pixel32 &left, const PF_Pixel32 &right) noexcept {
+inline bool operator!=(const PF_Pixel32 &left,
+                       const PF_Pixel32 &right) noexcept {
     return !((left.alpha == right.alpha) && (left.red == right.red) &&
              (left.green == right.green) && (left.blue == right.blue));
 }
@@ -57,11 +61,119 @@ inline std::basic_ostream<_Elem, _Traits> &operator<<(
     return _Ostr;
 }
 
+#include <cassert>
 #include <cmath>
 
+#include "Rect.hpp"
+
 inline bool IsFinite(const PF_Pixel32 &src) noexcept {
-    return std::isfinite(src.alpha) & std::isfinite(src.red) &
-           std::isfinite(src.green) & std::isfinite(src.blue);
+    return std::isfinite<float>(src.alpha) && std::isfinite<float>(src.red) &&
+           std::isfinite<float>(src.green) && std::isfinite<float>(src.blue);
+}
+
+template <class T, class U>
+inline T PixelCast(const U &src) noexcept {
+    std::string str = "SaturationCast Error.\n";
+    str += "T " + typeid(T).name() + "\n";
+    str += "U " + typeid(U).name();
+    assert(!(str.c_str()));
+    return T{};
+}
+template <>
+inline PF_Pixel32 PixelCast(const PF_Pixel &src) noexcept {
+    return src / 255.0f;
+}
+template <>
+inline PF_Pixel32 PixelCast(const PF_Pixel16 &src) noexcept {
+    return src / 32768.0f;
+}
+template <>
+inline PF_Pixel32 PixelCast(const PF_Pixel32 &src) noexcept {
+    return src;
+}
+template <>
+inline PF_Pixel PixelCast(const PF_Pixel32 &src) noexcept {
+    return PF_Pixel{static_cast<uint8_t>(src.alpha * 255.0f),
+                    static_cast<uint8_t>(src.red * 255.0f),
+                    static_cast<uint8_t>(src.green * 255.0f),
+                    static_cast<uint8_t>(src.blue * 255.0f)};
+}
+template <>
+inline PF_Pixel16 PixelCast(const PF_Pixel32 &src) noexcept {
+    return PF_Pixel16{static_cast<A_u_short>(src.alpha * 32768.0f),
+                      static_cast<A_u_short>(src.red * 32768.0f),
+                      static_cast<A_u_short>(src.green * 32768.0f),
+                      static_cast<A_u_short>(src.blue * 32768.0f)};
+}
+
+void PrePixelsCast(const PF_Pixel *src, PF_Pixel32 *out,
+                   const RectData &rect) noexcept {
+#pragma omp parallel for
+    for (int y = 0; y < rect.out.height; ++y) {
+        for (int x = 0; x < rect.out.width; ++x) {
+            const int src_pos = y * rect.in.pitch + x;
+            const int out_pos = y * rect.out.pitch + x;
+
+            out[out_pos] = PixelCast<PF_Pixel32, PF_Pixel>(src[src_pos]);
+        }
+    }
+}
+void PrePixelsCast(const PF_Pixel16 *src, PF_Pixel32 *out,
+                   const RectData &rect) noexcept {
+#pragma omp parallel for
+    for (int y = 0; y < rect.out.height; ++y) {
+        for (int x = 0; x < rect.out.width; ++x) {
+            const int src_pos = y * rect.in.pitch + x;
+            const int out_pos = y * rect.out.pitch + x;
+
+            out[out_pos] = PixelCast<PF_Pixel32, PF_Pixel16>(src[src_pos]);
+        }
+    }
+}
+void PrePixelsCast(const PF_Pixel32 *src, PF_Pixel32 *out,
+                   const RectData &rect) noexcept {
+#pragma omp parallel for
+    for (int y = 0; y < rect.out.height; ++y) {
+        for (int x = 0; x < rect.out.width; ++x) {
+            const int src_pos = y * rect.in.pitch + x;
+            const int out_pos = y * rect.out.pitch + x;
+
+            out[out_pos] = src[src_pos];
+        }
+    }
+}
+void PostPixelsCast(const PF_Pixel32 *src, PF_Pixel *out,
+                    const RectData &rect) noexcept {
+#pragma omp parallel for
+    for (int y = 0; y < rect.out.height; ++y) {
+        for (int x = 0; x < rect.out.width; ++x) {
+            const int pos = y * rect.out.pitch + x;
+
+            out[pos] = PixelCast<PF_Pixel, PF_Pixel32>(src[pos]);
+        }
+    }
+}
+void PostPixelsCast(const PF_Pixel32 *src, PF_Pixel16 *out,
+                    const RectData &rect) noexcept {
+#pragma omp parallel for
+    for (int y = 0; y < rect.out.height; ++y) {
+        for (int x = 0; x < rect.out.width; ++x) {
+            const int pos = y * rect.out.pitch + x;
+
+            out[pos] = PixelCast<PF_Pixel16, PF_Pixel32>(src[pos]);
+        }
+    }
+}
+void PostPixelsCast(const PF_Pixel32 *src, PF_Pixel32 *out,
+                    const RectData &rect) noexcept {
+#pragma omp parallel for
+    for (int y = 0; y < rect.out.height; ++y) {
+        for (int x = 0; x < rect.out.width; ++x) {
+            const int pos = y * rect.out.pitch + x;
+
+            out[pos] = src[pos];
+        }
+    }
 }
 
 #endif  // PIXEL_UTILS_HPP

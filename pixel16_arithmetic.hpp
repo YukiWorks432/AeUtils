@@ -8,130 +8,130 @@
 
 #if _MSVC_LANG < 202002L
 
-template <typename T>
+template <typename T,
+          std::enable_if_t<std::is_integral_v<T>, std::nullptr_t> = nullptr>
 inline PF_Pixel16 operator+(const PF_Pixel16 &src, const T x) noexcept {
-    static_assert(std::is_integral_v<T>);
     return PF_Pixel16{static_cast<A_u_short>(src.alpha + x),
                       static_cast<A_u_short>(src.red + x),
                       static_cast<A_u_short>(src.green + x),
                       static_cast<A_u_short>(src.blue + x)};
 }
-template <typename T>
+template <typename T,
+          std::enable_if_t<std::is_integral_v<T>, std::nullptr_t> = nullptr>
 inline PF_Pixel16 operator-(const PF_Pixel16 &src, const T x) noexcept {
-    static_assert(std::is_integral_v<T>);
     return PF_Pixel16{static_cast<A_u_short>(src.alpha - x),
                       static_cast<A_u_short>(src.red - x),
                       static_cast<A_u_short>(src.green - x),
                       static_cast<A_u_short>(src.blue - x)};
 }
-template <typename T>
+template <typename T,
+          std::enable_if_t<std::is_integral_v<T>, std::nullptr_t> = nullptr>
 inline PF_Pixel16 operator*(const PF_Pixel16 &src, const T x) noexcept {
-    static_assert(std::is_integral_v<T>);
     return PF_Pixel16{static_cast<A_u_short>(src.alpha * x),
                       static_cast<A_u_short>(src.red * x),
                       static_cast<A_u_short>(src.green * x),
                       static_cast<A_u_short>(src.blue * x)};
 }
-template <typename T>
+template <typename T,
+          std::enable_if_t<std::is_integral_v<T>, std::nullptr_t> = nullptr>
 inline PF_Pixel16 operator/(const PF_Pixel16 &src, const T x) noexcept {
-    static_assert(std::is_integral_v<T>);
     return PF_Pixel16{static_cast<A_u_short>(src.alpha / x),
                       static_cast<A_u_short>(src.red / x),
                       static_cast<A_u_short>(src.green / x),
                       static_cast<A_u_short>(src.blue / x)};
 }
-template <typename T>
+template <typename T,
+          std::enable_if_t<std::is_integral_v<T>, std::nullptr_t> = nullptr>
 inline PF_Pixel16 operator+(const T x, const PF_Pixel16 &src) noexcept {
-    static_assert(std::is_integral_v<T>);
     return PF_Pixel16{static_cast<A_u_short>(x + src.alpha),
                       static_cast<A_u_short>(x + src.red),
                       static_cast<A_u_short>(x + src.green),
                       static_cast<A_u_short>(x + src.blue)};
 }
-template <typename T>
+template <typename T,
+          std::enable_if_t<std::is_integral_v<T>, std::nullptr_t> = nullptr>
 inline PF_Pixel16 operator-(const T x, const PF_Pixel16 &src) noexcept {
-    static_assert(std::is_integral_v<T>);
     return PF_Pixel16{static_cast<A_u_short>(x - src.alpha),
                       static_cast<A_u_short>(x - src.red),
                       static_cast<A_u_short>(x - src.green),
                       static_cast<A_u_short>(x - src.blue)};
 }
-template <typename T>
+template <typename T,
+          std::enable_if_t<std::is_integral_v<T>, std::nullptr_t> = nullptr>
 inline PF_Pixel16 operator*(const T x, const PF_Pixel16 &src) noexcept {
-    static_assert(std::is_integral_v<T>);
     return PF_Pixel16{static_cast<A_u_short>(x * src.alpha),
                       static_cast<A_u_short>(x * src.red),
                       static_cast<A_u_short>(x * src.green),
                       static_cast<A_u_short>(x * src.blue)};
 }
-template <typename T>
+template <typename T,
+          std::enable_if_t<std::is_integral_v<T>, std::nullptr_t> = nullptr>
 inline PF_Pixel16 operator/(const T x, const PF_Pixel16 &src) noexcept {
-    static_assert(std::is_integral_v<T>);
     return PF_Pixel16{static_cast<A_u_short>(x / src.alpha),
                       static_cast<A_u_short>(x / src.red),
                       static_cast<A_u_short>(x / src.green),
                       static_cast<A_u_short>(x / src.blue)};
 }
 
-template <typename T>
+template <typename T, std::enable_if_t<std::is_floating_point_v<T>,
+                                       std::nullptr_t> = nullptr>
 inline PF_Pixel32 operator+(const PF_Pixel16 &src, const T x) noexcept {
-    static_assert(std::is_floating_point_v<T>);
     return PF_Pixel32{static_cast<A_FpShort>(src.alpha + x),
                       static_cast<A_FpShort>(src.red + x),
                       static_cast<A_FpShort>(src.green + x),
                       static_cast<A_FpShort>(src.blue + x)};
 }
-template <typename T>
+template <typename T, std::enable_if_t<std::is_floating_point_v<T>,
+                                       std::nullptr_t> = nullptr>
 inline PF_Pixel32 operator-(const PF_Pixel16 &src, const T x) noexcept {
-    static_assert(std::is_floating_point_v<T>);
     return PF_Pixel32{static_cast<A_FpShort>(src.alpha - x),
                       static_cast<A_FpShort>(src.red - x),
                       static_cast<A_FpShort>(src.green - x),
                       static_cast<A_FpShort>(src.blue - x)};
 }
-template <typename T>
+template <typename T, std::enable_if_t<std::is_floating_point_v<T>,
+                                       std::nullptr_t> = nullptr>
 inline PF_Pixel32 operator*(const PF_Pixel16 &src, const T x) noexcept {
-    static_assert(std::is_floating_point_v<T>);
     return PF_Pixel32{static_cast<A_FpShort>(src.alpha * x),
                       static_cast<A_FpShort>(src.red * x),
                       static_cast<A_FpShort>(src.green * x),
                       static_cast<A_FpShort>(src.blue * x)};
 }
-template <typename T>
+template <typename T, std::enable_if_t<std::is_floating_point_v<T>,
+                                       std::nullptr_t> = nullptr>
 inline PF_Pixel32 operator/(const PF_Pixel16 &src, const T x) noexcept {
-    static_assert(std::is_floating_point_v<T>);
     return PF_Pixel32{static_cast<A_FpShort>(src.alpha / x),
                       static_cast<A_FpShort>(src.red / x),
                       static_cast<A_FpShort>(src.green / x),
                       static_cast<A_FpShort>(src.blue / x)};
 }
-template <typename T>
+template <typename T, std::enable_if_t<std::is_floating_point_v<T>,
+                                       std::nullptr_t> = nullptr>
 inline PF_Pixel32 operator+(const T x, const PF_Pixel16 &src) noexcept {
-    static_assert(std::is_floating_point_v<T>);
     return PF_Pixel32{static_cast<A_FpShort>(x + src.alpha),
                       static_cast<A_FpShort>(x + src.red),
                       static_cast<A_FpShort>(x + src.green),
                       static_cast<A_FpShort>(x + src.blue)};
 }
-template <typename T>
+template <typename T, std::enable_if_t<std::is_floating_point_v<T>,
+                                       std::nullptr_t> = nullptr>
 inline PF_Pixel32 operator-(const T x, const PF_Pixel16 &src) noexcept {
-    static_assert(std::is_floating_point_v<T>);
     return PF_Pixel32{static_cast<A_FpShort>(x - src.alpha),
                       static_cast<A_FpShort>(x - src.red),
                       static_cast<A_FpShort>(x - src.green),
                       static_cast<A_FpShort>(x - src.blue)};
 }
-template <typename T>
+template <typename T, std::enable_if_t<std::is_floating_point_v<T>,
+                                       std::nullptr_t> = nullptr>
 inline PF_Pixel32 operator*(const T x, const PF_Pixel16 &src) noexcept {
-    static_assert(std::is_floating_point_v<T>);
     return PF_Pixel32{static_cast<A_FpShort>(x * src.alpha),
                       static_cast<A_FpShort>(x * src.red),
                       static_cast<A_FpShort>(x * src.green),
                       static_cast<A_FpShort>(x * src.blue)};
 }
-template <typename T>
+template <typename T, std::enable_if_t<std::is_floating_point_v<T>,
+                                       std::nullptr_t> = nullptr>
 inline PF_Pixel32 operator/(const T x, const PF_Pixel16 &src) noexcept {
-    static_assert(std::is_floating_point_v<T>);
     return PF_Pixel32{static_cast<A_FpShort>(x / src.alpha),
                       static_cast<A_FpShort>(x / src.red),
                       static_cast<A_FpShort>(x / src.green),

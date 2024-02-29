@@ -3,6 +3,7 @@
 #ifndef AE_UTILS_HPP
 #define AE_UTILS_HPP
 
+#include "EffectWorld.hpp"
 #include "Gray.hpp"
 #include "HSV.hpp"
 #include "PixelUtils.hpp"
